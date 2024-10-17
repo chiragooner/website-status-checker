@@ -4,23 +4,21 @@ This Python script monitors the availability of websites in real time. It checks
 
 ## Features
 
-- **Real-Time Monitoring**: The script constantly checks the status of websites at regular intervals.
 - **Telegram Alerts**: Sends a message via Telegram whenever a website goes down and also when a previously unavailable website recovers.
-- **Configurable Interval**: The script can be set to check websites every few seconds, minutes, or any time interval of your choice.
 - **Simple CSV Input**: Load the list of websites from a CSV file for easy management.
 
 ## Requirements
 
-Ensure you have the following installed:
+- Ensure you have the following installed:
 
-- **Python 3.x**
-- **pandas**: For handling the CSV file.
-- **requests**: For making HTTP requests to check website statuses.
+  - **Python 3.x**
+  - **pandas**: For handling the CSV file.
+  - **requests**: For making HTTP requests to check website statuses.
 
 You can install the required libraries using the following command:
 
 ```bash
-pip install pandas requests
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -38,7 +36,7 @@ pip install pandas requests
      ```
 
 2. **Update the Script with Your Telegram Bot Information**:
-   - Open `website_monitor.py` and modify the following variables with your **Telegram Bot Token** and **Chat ID**:
+   - Open `config.py` and modify the following variables with your **Telegram Bot Token** and **Chat ID**:
 
      ```python
      BOT_TOKEN = 'your_bot_token'
@@ -78,14 +76,6 @@ pip install pandas requests
 
 4. **Start Monitoring**:
    - Once the script is running, you will start receiving alerts if any of the websites listed in your CSV go down.
-
-### Customizing Time Intervals
-
-You can modify the frequency of the website checks by adjusting the interval in seconds when calling the `monitor_websites` function:
-
-```python
-monitor_websites(interval=60)  #The interval is set to 60 seconds by default
-```
 
 ## License
 
