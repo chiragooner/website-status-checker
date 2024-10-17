@@ -12,6 +12,7 @@ def monitor_websites():
     df.columns = ['URL']
     n_df = df.head(25) #limiting the items accessed from the csv at once to 25
 
+    website_status = {row['URL']: {'status': 'unknown', 'code': None} for index, row in n_df.iterrows()}
 
     while True:
         currently_down = {}
@@ -24,8 +25,14 @@ def monitor_websites():
 
             status, code = get_status(url)
 
-            if status != 'up':
-                currently_down[url] = {'status': status, "code": code}
+            if status != website_status[url]['status']:
+                website_status[url]['status'] = status
+                website_status[url]['code'] = code
+
+                if status == 'down':
+                    currently_down[url] = {'status': status, "code": code}
+                    send_message(f"{url} is currently {status}. Returned Status Code: {code}")
+
 
         if currently_down:
             alert_message = "The following websites are currently down:\n"
@@ -36,7 +43,7 @@ def monitor_websites():
             print("All websites are up.")
 
 
-         # Wait for the specified interval before checking again
+        # Wait for the specified interval before checking again
         time.sleep(check_interval)
 
 if __name__ == "__main__":
