@@ -1,8 +1,10 @@
 import pandas as pd
+import time
 from config import BOT_TOKEN, CHAT_ID
 from notifier import send_message, get_status
 
 csv_filepath = "websites.csv"
+check_interval = 60  # Time interval between checks in seconds
 
 def monitor_websites():
     # Load the list of websites into a pandas DataFrame
@@ -10,26 +12,32 @@ def monitor_websites():
     df.columns = ['URL']
     n_df = df.head(25) #limiting the items accessed from the csv at once to 25
 
-    currently_down = {}
 
-    for index, row in n_df.iterrows():
-        url = row['URL']
+    while True:
+        currently_down = {}
 
-        if not url.startswith(('http://', 'https://')):
-            url = 'https://' + url
+        for index, row in n_df.iterrows():
+            url = row['URL']
 
-        status, code = get_status(url)
+            if not url.startswith(('http://', 'https://')):
+                url = 'https://' + url
 
-        if status != 'up':
-            currently_down[url] = {'status': status, "code": code}
+            status, code = get_status(url)
 
-    if currently_down:
-        alert_message = "The following websites are currently down:\n"
-        for url, info in currently_down.items():
-            alert_message += f"{url} - Status: {info['status']}, Status Code: {info['code']}\n"
-        send_message(alert_message)
-    else:
-        print("All websites are up.")
+            if status != 'up':
+                currently_down[url] = {'status': status, "code": code}
+
+        if currently_down:
+            alert_message = "The following websites are currently down:\n"
+            for url, info in currently_down.items():
+                alert_message += f"{url} - Status: {info['status']}, Status Code: {info['code']}\n"
+            send_message(alert_message)
+        else:
+            print("All websites are up.")
+
+
+         # Wait for the specified interval before checking again
+        time.sleep(check_interval)
 
 if __name__ == "__main__":
     monitor_websites()

@@ -4,7 +4,9 @@ This Python script monitors the availability of websites in real time. It checks
 
 ## Features
 
+- **Real-Time Monitoring**: The script constantly checks the status of websites at regular intervals.
 - **Telegram Alerts**: Sends a message via Telegram whenever a website goes down and also when a previously unavailable website recovers.
+- **Configurable Interval**: The script can be set to check websites every few seconds, minutes, or any time interval of your choice.
 - **Simple CSV Input**: Load the list of websites from a CSV file for easy management.
 
 ## Requirements
@@ -49,7 +51,7 @@ pip install -r requirements.txt
    - Run the script using Python:
 
      ```bash
-     python main.py
+     python website_monitor.py
      ```
 
    - The script will check the websites listed in the CSV and send an alert if any are down.
