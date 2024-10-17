@@ -86,3 +86,7 @@ You can modify the frequency of the website checks by adjusting the interval in 
 ```python
 monitor_websites(interval=60)  #The interval is set to 60 seconds by default
 ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
