@@ -23,15 +23,19 @@ def monitor_websites():
             if not url.startswith(('http://', 'https://')):
                 url = 'https://' + url
 
+            if url not in website_status:
+                website_status[url] = {'status': 'unknown', 'code': None}
+
+
             status, code = get_status(url)
 
-            if status != website_status[url]['status']:
+            if status != website_status[url]['status'] or status is 'unknown':
                 website_status[url]['status'] = status
                 website_status[url]['code'] = code
 
                 if status == 'down':
                     currently_down[url] = {'status': status, "code": code}
-                    send_message(f"{url} is currently {status}. Returned Status Code: {code}")
+                    # send_message(f"{url} is currently {status}. Returned Status Code: {code}")
 
 
         if currently_down:
