@@ -51,7 +51,7 @@ pip install pandas requests
    - Run the script using Python:
 
      ```bash
-     python website_monitor.py
+     python main.py
      ```
 
    - The script will check the websites listed in the CSV and send an alert if any are down.
